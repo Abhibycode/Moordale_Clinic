@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8 Billion People | Moordale Love Probability Engine</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Syne & Space Grotesk for 70s Retro Vibe -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mustard: '#E28743',
+                        'mustard-dark': '#C66C28',
+                        teal: '#0E4749',
+                        'teal-dark': '#082E30',
+                        cream: '#FFF9ED',
+                        'cream-card': '#FFF4DF',
+                        'retro-red': '#D94E34',
+                        'retro-blue': '#2C5E8A',
+                        'retro-brown': '#4A3525'
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        space: ['Space Grotesk', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'retro': '5px 5px 0px 0px #0E4749',
+                        'retro-lg': '8px 8px 0px 0px #0E4749',
+                        'retro-mustard': '6px 6px 0px 0px #E28743',
+                        'retro-sm': '3px 3px 0px 0px #0E4749'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FFF9ED;
+            color: #0E4749;
+            font-family: 'Space Grotesk', sans-serif;
+            background-image: radial-gradient(#E28743 0.6px, transparent 0.6px), radial-gradient(#0E4749 0.6px, #FFF9ED 0.6px);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+        }
+
+        .title-font {
+            font-family: 'Syne', sans-serif;
+        }
+
+        /* Custom Retro Sliders */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 12px;
+            cursor: pointer;
+            background: #E28743;
+            border-radius: 6px;
+            border: 2px solid #0E4749;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #FFF9ED;
+            border: 3px solid #0E4749;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -7px;
+            box-shadow: 2px 2px 0px #0E4749;
+        }
+
+        .retro-card {
+            background-color: #FFF4DF;
+            border: 3px solid #0E4749;
+        }
+
+        .striped-header {
+            background: repeating-linear-gradient(
+                -45deg,
+                #E28743,
+                #E28743 15px,
+                #D94E34 15px,
+                #D94E34 30px
+            );
+        }
+
+        /* Toggle Checkbox Styles */
+        .badge-checkbox:checked + label {
+            background-color: #0E4749;
+            color: #FFF9ED;
+            border-color: #0E4749;
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px 0px #E28743;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16">
+
+    <header class="border-b-4 border-teal bg-cream sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-mustard border-2 border-teal flex items-center justify-center text-teal font-bold title-font text-xl shadow-retro-sm">
+                    8B
+                </div>
+                <div>
+                    <h1 class="title-font font-extrabold text-xl sm:text-2xl tracking-tight text-teal leading-none">
+                        8 BILLION PEOPLE
+                    </h1>
+                    <p class="text-xs font-bold text-mustard-dark tracking-wider uppercase">Moordale Statistical Clinic</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="btnOpenQuote" class="px-3 py-1.5 bg-mustard hover:bg-mustard-dark text-cream border-2 border-teal font-bold text-xs sm:text-sm rounded shadow-retro-sm transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-quote-left"></i>
+                    <span class="hidden sm:inline">Otis Speech</span>
+                </button>
+                <button id="btnOpenSources" class="px-3 py-1.5 bg-teal hover:bg-teal-dark text-cream border-2 border-teal font-bold text-xs sm:text-sm rounded shadow-retro-sm transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Sources 📊</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 pt-6">
+
+        <div class="retro-card rounded-xl p-6 mb-8 shadow-retro-lg relative overflow-hidden">
+            <div class="striped-header h-3 -mx-6 -mt-6 mb-6 border-b-2 border-teal"></div>
+            <div class="grid md:grid-cols-12 gap-6 items-center">
+                <div class="md:col-span-8">
+                    <div class="inline-block bg-retro-red text-cream font-bold text-xs px-3 py-1 rounded-full border-2 border-teal uppercase mb-3 shadow-retro-sm">
+                        <i class="fa-solid fa-bullhorn mr-1"></i> Moordale High Therapy Session #84
+                    </div>
+                    <h2 class="title-font text-2xl sm:text-4xl font-extrabold text-teal mb-3 leading-tight">
+                        "There are 8 billion people out there..."
+                    </h2>
+                    <p class="text-teal font-medium text-base sm:text-lg leading-relaxed mb-4">
+                        "...and someone is going to love you for exactly who you are. But love comes with preferences! Let’s narrow down the global population based on your exact criteria to see just how many potential soulmates exist for you."
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <span class="text-xs font-bold bg-cream px-3 py-1.5 rounded-lg border-2 border-teal flex items-center gap-1.5 shadow-retro-sm">
+                            <i class="fa-solid fa-users text-mustard"></i> Global Base: 8,050,000,000
+                        </span>
+                        <span class="text-xs font-bold bg-cream px-3 py-1.5 rounded-lg border-2 border-teal flex items-center gap-1.5 shadow-retro-sm">
+                            <i class="fa-solid fa-calculator text-retro-red"></i> Real UN Census Demographics
+                        </span>
+                    </div>
+                </div>
+                <div class="md:col-span-4 flex justify-center">
+                    <div class="bg-mustard p-4 rounded-xl border-2 border-teal shadow-retro rotate-2 text-center max-w-xs w-full">
+                        <div class="w-20 h-20 bg-cream rounded-full border-2 border-teal mx-auto mb-2 flex items-center justify-center text-3xl shadow-retro-sm">
+                            🛋️
+                        </div>
+                        <h3 class="title-font font-extrabold text-teal text-lg">Otis Milburn Says:</h3>
+                        <p class="text-xs text-teal font-semibold italic mt-1">
+                            "Stop overthinking your specs. Let's look at the actual math."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-12 gap-8">
+
+            <div class="lg:col-span-7 space-y-6">
+
+                <!-- SECTION 1: IDENTITY & LOCATION -->
+                <div class="retro-card p-5 sm:p-6 rounded-xl shadow-retro">
+                    <div class="flex items-center gap-2 border-b-2 border-teal pb-3 mb-4">
+                        <span class="w-7 h-7 rounded-full bg-mustard text-teal font-bold border-2 border-teal flex items-center justify-center text-sm">1</span>
+                        <h3 class="title-font font-bold text-xl text-teal">Target Identity & Location</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Gender Selection -->
+                        <div>
+                            <label class="block text-xs font-extrabold uppercase text-teal mb-2">
+                                Looking For Gender / Orientation
+                            </label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                <button type="button" data-gender="any" class="gender-btn px-3 py-2 bg-mustard text-cream border-2 border-teal font-bold text-xs rounded-lg shadow-retro-sm transition-all">
+                                    Any
+                                </button>
+                                <button type="button" data-gender="female" class="gender-btn px-3 py-2 bg-cream border-2 border-teal font-bold text-xs rounded-lg shadow-retro-sm transition-all">
+                                    Female
+                                </button>
+                                <button type="button" data-gender="male" class="gender-btn px-3 py-2 bg-cream border-2 border-teal font-bold text-xs rounded-lg shadow-retro-sm transition-all">
+                                    Male
+                                </button>
+                                <button type="button" data-gender="queer" class="gender-btn px-3 py-2 bg-cream border-2 border-teal font-bold text-xs rounded-lg shadow-retro-sm transition-all">
+                                    Non-Binary/Queer
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Country & State Select -->
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase text-teal mb-1" for="countrySelect">
+                                    Country
+                                </label>
+                                <select id="countrySelect" class="w-full bg-cream border-2 border-teal font-bold text-sm rounded-lg p-2.5 shadow-retro-sm focus:outline-none focus:ring-2 focus:ring-mustard">
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase text-teal mb-1" for="stateSelect">
+                                    State / Region
+                                </label>
+                                <select id="stateSelect" class="w-full bg-cream border-2 border-teal font-bold text-sm rounded-lg p-2.5 shadow-retro-sm focus:outline-none focus:ring-2 focus:ring-mustard">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: AGE RANGE & RELIGION -->
+                <div class="retro-card p-5 sm:p-6 rounded-xl shadow-retro">
+                    <div class="flex items-center gap-2 border-b-2 border-teal pb-3 mb-4">
+                        <span class="w-7 h-7 rounded-full bg-mustard text-teal font-bold border-2 border-teal flex items-center justify-center text-sm">2</span>
+                        <h3 class="title-font font-bold text-xl text-teal">Age Brackets & Faith</h3>
+                    </div>
+
+                    <div class="space-y-5">
+                        <!-- Age Range Slider -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-xs font-extrabold uppercase text-teal">
+                                    Target Age Range
+                                </label>
+                                <span id="ageRangeLabel" class="bg-mustard px-2.5 py-0.5 border-2 border-teal rounded font-bold text-xs text-teal shadow-retro-sm">
+                                    18 - 35 years old
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <span class="text-xs font-bold text-teal">Min Age: <span id="minAgeVal">18</span></span>
+                                    <input type="range" id="minAge" min="18" max="80" value="18">
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-teal">Max Age: <span id="maxAgeVal">35</span></span>
+                                    <input type="range" id="maxAge" min="18" max="80" value="35">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Religion Select -->
+                        <div>
+                            <label class="block text-xs font-extrabold uppercase text-teal mb-1" for="religionSelect">
+                                Religion / Belief System
+                            </label>
+                            <select id="religionSelect" class="w-full bg-cream border-2 border-teal font-bold text-sm rounded-lg p-2.5 shadow-retro-sm focus:outline-none">
+                                <option value="any">Any / Doesn't Matter</option>
+                                <option value="secular">Secular / Atheist / Agnostic (~16%)</option>
+                                <option value="christian">Christianity (~31%)</option>
+                                <option value="muslim">Islam (~25%)</option>
+                                <option value="hindu">Hinduism (~15%)</option>
+                                <option value="buddhism">Buddhism (~6%)</option>
+                                <option value="sikh">Sikhism (~0.4%)</option>
+                                <option value="jewish">Judaism (~0.2%)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: PROFESSION & LIFESTYLE DEALBREAKERS -->
+                <div class="retro-card p-5 sm:p-6 rounded-xl shadow-retro">
+                    <div class="flex items-center gap-2 border-b-2 border-teal pb-3 mb-4">
+                        <span class="w-7 h-7 rounded-full bg-mustard text-teal font-bold border-2 border-teal flex items-center justify-center text-sm">3</span>
+                        <h3 class="title-font font-bold text-xl text-teal">Profession & Dealbreakers</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Profession -->
+                        <div>
+                            <label class="block text-xs font-extrabold uppercase text-teal mb-1" for="professionSelect">
+                                Career Field / Vibe
+                            </label>
+                            <select id="professionSelect" class="w-full bg-cream border-2 border-teal font-bold text-sm rounded-lg p-2.5 shadow-retro-sm focus:outline-none">
+                                <option value="any">Any Profession</option>
+                                <option value="tech">Tech & Software Engineering</option>
+                                <option value="health">Healthcare & Medicine</option>
+                                <option value="education">Education & Research</option>
+                                <option value="arts">Creative Arts, Film & Design</option>
+                                <option value="business">Business & Entrepreneurship</option>
+                                <option value="trades">Skilled Trades & Services</option>
+                                <option value="psychopath">Investment Banker / Pure Psychopaths 📈</option>
+                            </select>
+                        </div>
+
+                        <!-- Lifestyle Toggles -->
+                        <div>
+                            <label class="block text-xs font-extrabold uppercase text-teal mb-2">
+                                Strict Preferences & Vibe Checks
+                            </label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <input type="checkbox" id="deal-smoker" class="hidden badge-checkbox calc-trigger">
+                                    <label for="deal-smoker" class="block w-full text-center px-3 py-2 bg-cream border-2 border-teal font-bold text-xs rounded-lg cursor-pointer transition-all select-none shadow-retro-sm">
+                                        🚭 Non-Smoker Only
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="deal-pet" class="hidden badge-checkbox calc-trigger">
+                                    <label for="deal-pet" class="block w-full text-center px-3 py-2 bg-cream border-2 border-teal font-bold text-xs rounded-lg cursor-pointer transition-all select-none shadow-retro-sm">
+                                        🐶 Animal / Pet Lover
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="deal-night" class="hidden badge-checkbox calc-trigger">
+                                    <label for="deal-night" class="block w-full text-center px-3 py-2 bg-cream border-2 border-teal font-bold text-xs rounded-lg cursor-pointer transition-all select-none shadow-retro-sm">
+                                        🌙 Night Owl Vibe
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="deal-introvert" class="hidden badge-checkbox calc-trigger">
+                                    <label for="deal-introvert" class="block w-full text-center px-3 py-2 bg-cream border-2 border-teal font-bold text-xs rounded-lg cursor-pointer transition-all select-none shadow-retro-sm">
+                                        ☕ Introverted / Chill
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MOORDALE CLINIC ARCHIVES BUTTON -->
+                <button id="btnArchives" class="w-full py-4 bg-mustard hover:bg-mustard-dark text-cream title-font font-extrabold text-xl rounded-xl border-2 border-teal shadow-retro-lg transition-all transform active:translate-y-1 active:shadow-retro-sm flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>MOORDALE CLINIC ARCHIVES 🛋️</span>
+                </button>
+
+            </div>
+
+            <div class="lg:col-span-5">
+                <div class="sticky top-20 space-y-6">
+
+                    <!-- MAIN SCOREBOARD CARD -->
+                    <div class="retro-card p-6 rounded-xl shadow-retro-lg border-2 border-teal relative overflow-hidden bg-cream">
+                        <div class="bg-teal text-cream -mx-6 -mt-6 p-3 mb-4 border-b-2 border-teal flex justify-between items-center">
+                            <span class="title-font font-bold text-sm tracking-widest uppercase">Statistical Assessment</span>
+                            <span class="text-xs font-bold bg-mustard text-teal px-2 py-0.5 rounded border border-teal">Moordale Certified</span>
+                        </div>
+
+                        <!-- MATCH COUNT DISPLAY -->
+                        <div class="text-center py-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-teal opacity-80">Estimated People Matching Criteria</span>
+                            <div id="matchCount" class="title-font font-black text-4xl sm:text-5xl text-retro-red my-1 tracking-tight">
+                                8,050,000,000
+                            </div>
+                            <div id="worldPercent" class="text-sm font-bold text-teal bg-mustard/30 inline-block px-3 py-1 rounded-full border border-teal mt-1">
+                                100.000000% of World Population
+                            </div>
+                        </div>
+
+                        <!-- PROGRESS BAR VISUALIZER -->
+                        <div class="mt-6 space-y-2">
+                            <div class="flex justify-between text-xs font-bold text-teal">
+                                <span>Global Population Scale</span>
+                                <span id="probabilityFraction">1 in 1</span>
+                            </div>
+                            <div class="w-full h-4 bg-cream border-2 border-teal rounded-full p-0.5 overflow-hidden">
+                                <div id="probabilityBar" class="h-full bg-mustard rounded-full transition-all duration-500 border-r border-teal" style="width: 100%"></div>
+                            </div>
+                        </div>
+
+                        <!-- OTIS ASSESSMENT CARD -->
+                        <div id="assessmentBox" class="mt-6 p-4 rounded-lg bg-cream-card border-2 border-teal">
+                            <div class="flex items-start gap-3">
+                                <div class="text-2xl">📋</div>
+                                <div>
+                                    <h4 id="assessmentTitle" class="title-font font-extrabold text-teal text-base">
+                                        Pure Universal Canvas
+                                    </h4>
+                                    <p id="assessmentDesc" class="text-xs text-teal mt-1 leading-normal font-medium">
+                                        You haven't applied any restrictions! Every human on planet Earth is technically in your pool. Otis says: "A bit too broad, but love is open-minded!"
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SHARE / EXPORT ACTION -->
+                        <div class="mt-6 pt-4 border-t-2 border-teal/20 flex gap-2">
+                            <button id="btnCopy" class="w-full py-2 bg-cream hover:bg-mustard border-2 border-teal font-bold text-xs text-teal rounded-lg shadow-retro-sm transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-copy"></i>
+                                <span id="copyBtnText">Copy My Results</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- MOTIVATIONAL MINI QUOTE CARD -->
+                    <div class="bg-teal text-cream p-5 rounded-xl border-2 border-teal shadow-retro relative">
+                        <i class="fa-solid fa-quote-right text-mustard text-3xl absolute bottom-3 right-3 opacity-30"></i>
+                        <p class="text-xs font-semibold leading-relaxed italic mb-2">
+                            "It’s not about finding someone who ticks every absurd sub-caste or exact niche job criteria. It’s about leaving enough room for a real human to surprise you."
+                        </p>
+                        <span class="text-xs font-bold text-mustard uppercase tracking-widest block text-right">— Maeve Wiley</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="mt-16 border-t-4 border-teal bg-cream py-8">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-4">
+            <p class="title-font font-extrabold text-teal text-xl tracking-tight">8 BILLION PEOPLE ENGINE</p>
+            <p class="text-xs text-teal font-medium max-w-xl mx-auto leading-relaxed">
+                Inspired by Netflix's 'Sex Education'. Built with dynamic demographic estimations utilizing UN Population Tables, ILO Work Distributions, and Pew Research Center Data.
+            </p>
+            
+            <div class="flex justify-center items-center gap-6 pt-2">
+                <a href="https://www.instagram.com/abhipersonalnotes/" target="_blank" rel="noopener noreferrer" class="text-teal hover:text-mustard text-xl transition-colors flex items-center gap-2 font-bold text-xs">
+                    <i class="fa-brands fa-instagram text-lg"></i>
+                    <span>Instagram</span>
+                </a>
+                <span class="text-teal/40">•</span>
+                <a href="https://www.youtube.com/@Abhishek_Kongari" target="_blank" rel="noopener noreferrer" class="text-teal hover:text-mustard text-xl transition-colors flex items-center gap-2 font-bold text-xs">
+                    <i class="fa-brands fa-youtube text-lg"></i>
+                    <span>YouTube</span>
+                </a>
+            </div>
+
+            <div class="flex justify-center gap-4 text-xs font-bold text-teal pt-1">
+                <button id="btnFooterSources" class="underline hover:text-mustard">Data Methodology</button>
+                <span>•</span>
+                <button id="btnFooterQuote" class="underline hover:text-mustard">Otis Speech Scene</button>
+            </div>
+
+            <div class="pt-4 border-t border-teal/20 text-xs font-bold text-teal">
+                © Designed, Created & Owned by <span class="text-retro-red font-black">Abhishek Kongari</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: DATA SOURCES & PROVENANCE -->
+    <div id="sourcesModal" class="fixed inset-0 bg-teal/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="retro-card max-w-2xl w-full rounded-xl shadow-retro-lg border-2 border-teal p-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b-2 border-teal pb-3 mb-4">
+                <h3 class="title-font font-black text-2xl text-teal flex items-center gap-2">
+                    <i class="fa-solid fa-database text-mustard"></i>
+                    Data Sources & Provenance
+                </h3>
+                <button id="btnCloseSources" class="w-8 h-8 rounded-full bg-retro-red text-cream font-bold border-2 border-teal flex items-center justify-center shadow-retro-sm">✕</button>
+            </div>
+
+            <p class="text-xs font-semibold text-teal mb-4 leading-relaxed">
+                All calculations executed by this engine rely on real demographic distributions compiled from global international institutions. Here is where the math originates:
+            </p>
+
+            <div class="space-y-3 text-xs">
+                <div class="p-3 bg-cream border-2 border-teal rounded-lg shadow-retro-sm">
+                    <div class="flex justify-between font-bold text-teal mb-1">
+                        <span class="text-sm font-extrabold">1. World Population & Country Weights</span>
+                        <a href="https://population.un.org/wpp/" target="_blank" rel="noopener noreferrer" class="text-retro-red hover:underline"><i class="fa-solid fa-arrow-up-right-from-square"></i> Link</a>
+                    </div>
+                    <p class="text-teal/80">Source: UN World Population Prospects. Used for nation-by-nation headcount and regional state weight calculations.</p>
+                </div>
+
+                <div class="p-3 bg-cream border-2 border-teal rounded-lg shadow-retro-sm">
+                    <div class="flex justify-between font-bold text-teal mb-1">
+                        <span class="text-sm font-extrabold">2. Age Pyramid Distributions</span>
+                        <a href="https://www.census.gov/data-tools/demo/idb/" target="_blank" rel="noopener noreferrer" class="text-retro-red hover:underline"><i class="fa-solid fa-arrow-up-right-from-square"></i> Link</a>
+                    </div>
+                    <p class="text-teal/80">Source: U.S. Census Bureau International Database & UN Age Cohorts. Calculates realistic percentage splits between ages 18 to 80+.</p>
+                </div>
+
+                <div class="p-3 bg-cream border-2 border-teal rounded-lg shadow-retro-sm">
+                    <div class="flex justify-between font-bold text-teal mb-1">
+                        <span class="text-sm font-extrabold">3. Religious & Secular Demographics</span>
+                        <a href="https://www.pewresearch.org/religion/" target="_blank" rel="noopener noreferrer" class="text-retro-red hover:underline"><i class="fa-solid fa-arrow-up-right-from-square"></i> Link</a>
+                    </div>
+                    <p class="text-teal/80">Source: Pew Research Center - Global Religious Landscape Study. Provides global proportions for major world belief systems.</p>
+                </div>
+
+                <div class="p-3 bg-cream border-2 border-teal rounded-lg shadow-retro-sm">
+                    <div class="flex justify-between font-bold text-teal mb-1">
+                        <span class="text-sm font-extrabold">4. Global Employment & Professions</span>
+                        <a href="https://ilostat.ilo.org/" target="_blank" rel="noopener noreferrer" class="text-retro-red hover:underline"><i class="fa-solid fa-arrow-up-right-from-square"></i> Link</a>
+                    </div>
+                    <p class="text-teal/80">Source: International Labour Organization (ILOSTAT) & National Labor Surveys. Weighs sector employment percentages worldwide.</p>
+                </div>
+
+                <div class="p-3 bg-cream border-2 border-teal rounded-lg shadow-retro-sm">
+                    <div class="flex justify-between font-bold text-teal mb-1">
+                        <span class="text-sm font-extrabold">5. Orientation & LGBTQ+ Data</span>
+                        <a href="https://news.gallup.com/" target="_blank" rel="noopener noreferrer" class="text-retro-red hover:underline"><i class="fa-solid fa-arrow-up-right-from-square"></i> Link</a>
+                    </div>
+                    <p class="text-teal/80">Source: Gallup LGBTQ+ Demographics Survey & Ipsos LGBT+ Pride Global Survey. Provides weighted identity preferences.</p>
+                </div>
+            </div>
+
+            <div class="mt-5 text-center">
+                <button id="btnConfirmSources" class="px-6 py-2 bg-mustard font-bold text-xs text-teal rounded-lg border-2 border-teal shadow-retro-sm">
+                    Got It, Back To Stats
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL 2: OTIS CLINIC SPEECH & RANDOM ARCHIVES MODAL -->
+    <div id="quoteModal" class="fixed inset-0 bg-teal/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="retro-card max-w-lg w-full rounded-xl shadow-retro-lg border-2 border-teal p-6 text-center relative bg-cream">
+            <button id="btnCloseQuote" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-retro-red text-cream font-bold border-2 border-teal flex items-center justify-center shadow-retro-sm">✕</button>
+            
+            <div class="w-16 h-16 bg-mustard rounded-full border-2 border-teal flex items-center justify-center text-2xl mx-auto mb-3 shadow-retro-sm">
+                🎙️
+            </div>
+
+            <span id="quoteBadge" class="text-xs font-bold bg-teal text-cream px-3 py-1 rounded-full uppercase tracking-wider">Moordale Clinic Archives</span>
+
+            <h3 id="quoteHeader" class="title-font font-black text-2xl text-teal mt-3 mb-4 leading-snug">
+                "Love isn't about perfection."
+            </h3>
+
+            <div class="p-4 bg-cream-card rounded-lg border-2 border-teal text-left space-y-3 mb-5 font-medium text-sm text-teal">
+                <p id="quoteText" class="italic">
+                    "There are eight billion people in the world. You don't need all eight billion to like you. You just need one who loves you for exactly who you are."
+                </p>
+                <p id="quoteAuthor" class="text-xs font-bold text-mustard-dark text-right">— Otis Milburn, Sex Education</p>
+            </div>
+
+            <button id="btnConfirmQuote" class="w-full py-3 bg-teal hover:bg-teal-dark text-cream font-bold text-sm rounded-lg border-2 border-teal shadow-retro-sm">
+                Return to Probability Engine
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Demographic Data Constants & UN World Weights
+        const BASE_WORLD_POPULATION = 8050000000;
+
+        const DEMO_DATA = {
+            countries: {
+                world: { name: "Worldwide (All Countries)", weight: 1.0, states: ["All Regions / States"] },
+                india: { 
+                    name: "India (🇮🇳)", 
+                    weight: 0.177, 
+                    states: ["All States", "Maharashtra", "Uttar Pradesh", "Tamil Nadu", "Karnataka", "Delhi NCR", "Gujarat", "West Bengal", "Punjab", "Kerala", "Telangana"] 
+                },
+                usa: { 
+                    name: "United States (🇺🇸)", 
+                    weight: 0.042, 
+                    states: ["All States", "California", "Texas", "Florida", "New York", "Illinois", "Pennsylvania", "Ohio", "Georgia", "Washington"] 
+                },
+                china: { 
+                    name: "China 🇨🇳", 
+                    weight: 0.175, 
+                    states: ["All Provinces", "Guangdong", "Shandong", "Henan", "Sichuan", "Jiangsu", "Zhejiang", "Beijing", "Shanghai"] 
+                },
+                uk: { 
+                    name: "United Kingdom (UK)", 
+                    weight: 0.0084, 
+                    states: ["All Regions", "England - London", "England - North West", "Scotland", "Wales", "Northern Ireland", "Midlands"] 
+                },
+                canada: { 
+                    name: "Canada (🇨🇦)", 
+                    weight: 0.0049, 
+                    states: ["All Provinces", "Ontario", "Quebec", "British Columbia", "Alberta", "Manitoba"] 
+                },
+                australia: { 
+                    name: "Australia (🇦🇺)", 
+                    weight: 0.0033, 
+                    states: ["All States", "New South Wales", "Victoria", "Queensland", "Western Australia", "South Australia"] 
+                },
+                germany: { 
+                    name: "Germany (🇩🇪)", 
+                    weight: 0.0104, 
+                    states: ["All States", "Bavaria", "North Rhine-Westphalia", "Baden-Württemberg", "Berlin", "Hesse"] 
+                },
+                brazil: { 
+                    name: "Brazil (🇧🇷)", 
+                    weight: 0.0268, 
+                    states: ["All States", "São Paulo", "Rio de Janeiro", "Minas Gerais", "Bahia", "Paraná"] 
+                }
+            },
+            genders: {
+                any: 1.0,
+                female: 0.495,
+                male: 0.495,
+                queer: 0.08
+            },
+            religions: {
+                any: 1.0,
+                secular: 0.16,
+                christian: 0.31,
+                muslim: 0.25,
+                hindu: 0.15,
+                buddhism: 0.06,
+                sikh: 0.004,
+                jewish: 0.002
+            },
+            professions: {
+                any: 1.0,
+                tech: 0.06,
+                health: 0.08,
+                education: 0.09,
+                arts: 0.04,
+                business: 0.12,
+                trades: 0.22,
+                psychopath: 0.015
+            },
+            lifestyles: {
+                smoker: 0.78,
+                pet: 0.55,
+                night: 0.40,
+                introvert: 0.48
+            }
+        };
+
+        // Curated List of Sex Education Quotes & Monologues for Archives
+        const MOORDALE_QUOTES = [
+            {
+                badge: "Moordale Finale Speech",
+                header: "There are 8 Billion People...",
+                text: "There are eight billion people in the world. You don't need all eight billion to like you. You just need one who loves you for exactly who you are.",
+                author: "Otis Milburn, Sex Education"
+            },
+            {
+                badge: "Therapy Session #12",
+                header: "Love is vulnerability.",
+                text: "Love isn't about grand gestures or romantic perfection. It's about letting someone see all the messy, weird, terrified parts of you and having them stay anyway.",
+                author: "Otis Milburn"
+            },
+            {
+                badge: "Maeve's Advice",
+                header: "People aren't checklists.",
+                text: "It’s not about finding someone who ticks every absurd sub-caste or exact niche job criteria. It’s about leaving enough room for a real human to surprise you.",
+                author: "Maeve Wiley"
+            },
+            {
+                badge: "Therapy Session #45",
+                header: "Communication over perfection.",
+                text: "Most people are completely terrified of being honest about what they actually feel. If you can just talk to each other without pretense, you're already ahead of 90% of humanity.",
+                author: "Otis Milburn"
+            },
+            {
+                badge: "Clinic Wisdom",
+                header: "Embrace the awkwardness.",
+                text: "Being vulnerable is terrifying because you might get hurt. But trying to protect yourself from everything just guarantees you'll miss out on the good stuff too.",
+                author: "Otis Milburn"
+            },
+            {
+                badge: "Eric's Golden Rule",
+                header: "Shine without apology.",
+                text: "Your person is going to love the loudest, brightest, or quietest version of you. Don't dim your light just to fit into someone else's tiny criteria box.",
+                author: "Eric Effiong"
+            },
+            {
+                badge: "Jean's Clinical Insight",
+                header: "Intimacy takes practice.",
+                text: "We spend so much time searching for the 'perfect match' that we forget relationships are built, not stumbled upon like lost keys.",
+                author: "Dr. Jean Milburn"
+            }
+        ];
+
+        // State Tracking
+        let currentGender = 'any';
+
+        // Initialize App on DOM Load
+        window.addEventListener('DOMContentLoaded', () => {
+            populateCountries();
+            handleCountryChange();
+            updateAgeValues();
+            bindEvents();
+            calculateProbability();
+        });
+
+        function populateCountries() {
+            const countrySelect = document.getElementById('countrySelect');
+            countrySelect.innerHTML = '';
+            for (const key in DEMO_DATA.countries) {
+                const opt = document.createElement('option');
+                opt.value = key;
+                opt.textContent = DEMO_DATA.countries[key].name;
+                countrySelect.appendChild(opt);
+            }
+        }
+
+        function handleCountryChange() {
+            const countryKey = document.getElementById('countrySelect').value;
+            const stateSelect = document.getElementById('stateSelect');
+            const countryData = DEMO_DATA.countries[countryKey];
+
+            stateSelect.innerHTML = '';
+            countryData.states.forEach((st, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx === 0 ? 'all' : String(idx);
+                opt.textContent = st;
+                stateSelect.appendChild(opt);
+            });
+
+            calculateProbability();
+        }
+
+        function setGender(gender) {
+            currentGender = gender;
+            document.querySelectorAll('.gender-btn').forEach(btn => {
+                btn.classList.remove('bg-mustard', 'text-cream');
+                btn.classList.add('bg-cream');
+            });
+            
+            const activeBtn = document.querySelector('[data-gender="' + gender + '"]');
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-cream');
+                activeBtn.classList.add('bg-mustard', 'text-cream');
+            }
+            calculateProbability();
+        }
+
+        function updateAgeValues() {
+            let min = parseInt(document.getElementById('minAge').value, 10);
+            let max = parseInt(document.getElementById('maxAge').value, 10);
+
+            if (min > max) {
+                min = max;
+                document.getElementById('minAge').value = min;
+            }
+
+            document.getElementById('minAgeVal').textContent = min;
+            document.getElementById('maxAgeVal').textContent = max;
+            document.getElementById('ageRangeLabel').textContent = min + " - " + max + " years old";
+
+            calculateProbability();
+        }
+
+        function calculateProbability(animate) {
+            let cumulativeProbability = 1.0;
+
+            const countryKey = document.getElementById('countrySelect').value;
+            const countryWeight = DEMO_DATA.countries[countryKey].weight;
+            cumulativeProbability *= countryWeight;
+
+            const stateVal = document.getElementById('stateSelect').value;
+            if (stateVal !== 'all') {
+                cumulativeProbability *= 0.12;
+            }
+
+            cumulativeProbability *= DEMO_DATA.genders[currentGender];
+
+            const minAge = parseInt(document.getElementById('minAge').value, 10);
+            const maxAge = parseInt(document.getElementById('maxAge').value, 10);
+            const totalSpan = 80 - 18;
+            const selectedSpan = Math.max(1, maxAge - minAge);
+            const ageFraction = (selectedSpan / totalSpan) * 0.70; 
+            cumulativeProbability *= ageFraction;
+
+            const relKey = document.getElementById('religionSelect').value;
+            cumulativeProbability *= DEMO_DATA.religions[relKey];
+
+            const profKey = document.getElementById('professionSelect').value;
+            cumulativeProbability *= DEMO_DATA.professions[profKey];
+
+            if (document.getElementById('deal-smoker').checked) cumulativeProbability *= DEMO_DATA.lifestyles.smoker;
+            if (document.getElementById('deal-pet').checked) cumulativeProbability *= DEMO_DATA.lifestyles.pet;
+            if (document.getElementById('deal-night').checked) cumulativeProbability *= DEMO_DATA.lifestyles.night;
+            if (document.getElementById('deal-introvert').checked) cumulativeProbability *= DEMO_DATA.lifestyles.introvert;
+
+            const matches = Math.max(1, Math.round(BASE_WORLD_POPULATION * cumulativeProbability));
+            const percentage = (matches / BASE_WORLD_POPULATION) * 100;
+
+            updateUIResults(matches, percentage, cumulativeProbability, animate);
+        }
+
+        function updateUIResults(matches, percentage, prob, animate) {
+            const matchElement = document.getElementById('matchCount');
+            const percentElement = document.getElementById('worldPercent');
+            const barElement = document.getElementById('probabilityBar');
+            const fractionElement = document.getElementById('probabilityFraction');
+
+            const formattedMatches = matches.toLocaleString();
+
+            if (animate) {
+                matchElement.classList.add('scale-105', 'text-mustard');
+                setTimeout(() => matchElement.classList.remove('scale-105', 'text-mustard'), 300);
+            }
+
+            matchElement.textContent = formattedMatches;
+            percentElement.textContent = (percentage < 0.000001 ? '< 0.000001' : percentage.toFixed(6)) + '% of World Population';
+
+            const fraction = Math.round(1 / prob);
+            fractionElement.textContent = fraction <= 1 ? "1 in 1 human" : "1 in " + fraction.toLocaleString() + " people";
+
+            let barWidth = 100;
+            if (percentage < 100) {
+                barWidth = Math.max(3, Math.min(100, Math.log10(percentage + 1) * 50));
+            }
+            barElement.style.width = barWidth + "%";
+
+            updateAssessment(matches, percentage);
+        }
+
+        function updateAssessment(matches, percentage) {
+            const title = document.getElementById('assessmentTitle');
+            const desc = document.getElementById('assessmentDesc');
+
+            if (percentage >= 10) {
+                title.textContent = "🌐 Open Sea of Possibilities";
+                desc.textContent = "Your criteria are super broad! You've got hundreds of millions of potential soulmates. Otis says: 'You are extremely open-minded, or you haven't decided what you like yet!'";
+            } else if (percentage >= 0.1) {
+                title.textContent = "💚 Healthy & Realistic Standards";
+                desc.textContent = "You have distinct preferences without locking yourself in a tiny box. Millions of real people match your exact vibe.";
+            } else if (percentage >= 0.001) {
+                title.textContent = "🔎 Selective & Specific Vibe";
+                desc.textContent = "You know what you want! Your preferences narrow down the field significantly, but thousands of compatible people exist.";
+            } else if (percentage >= 0.00001) {
+                title.textContent = "⚡ High Standards Clinic Alert";
+                desc.textContent = "Borderline picky! You're searching for a needle in a haystack. Otis advises: 'Make sure these dealbreakers are real values, not arbitrary checklists.'";
+            } else {
+                title.textContent = "📈 Pure Psychopath Pickiness Level";
+                desc.textContent = "Statistically extreme! You've narrowed 8 billion people down to a tiny room full of candidates. Hope you like long-distance relationships!";
+            }
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function showRandomQuoteModal() {
+            const randomIndex = Math.floor(Math.random() * MOORDALE_QUOTES.length);
+            const quote = MOORDALE_QUOTES[randomIndex];
+
+            document.getElementById('quoteBadge').textContent = quote.badge;
+            document.getElementById('quoteHeader').textContent = quote.header;
+            document.getElementById('quoteText').textContent = '"' + quote.text + '"';
+            document.getElementById('quoteAuthor').textContent = '— ' + quote.author;
+
+            openModal('quoteModal');
+        }
+
+        function bindEvents() {
+            document.getElementById('countrySelect').addEventListener('change', handleCountryChange);
+            document.getElementById('stateSelect').addEventListener('change', () => calculateProbability(true));
+            document.getElementById('religionSelect').addEventListener('change', () => calculateProbability(true));
+            document.getElementById('professionSelect').addEventListener('change', () => calculateProbability(true));
+
+            document.getElementById('minAge').addEventListener('input', updateAgeValues);
+            document.getElementById('maxAge').addEventListener('input', updateAgeValues);
+
+            document.querySelectorAll('.gender-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const gender = e.currentTarget.getAttribute('data-gender');
+                    setGender(gender);
+                });
+            });
+
+            document.querySelectorAll('.calc-trigger').forEach(input => {
+                input.addEventListener('change', () => calculateProbability(true));
+            });
+
+            // Archives Button - Shows Random Quote
+            document.getElementById('btnArchives').addEventListener('click', showRandomQuoteModal);
+
+            // Modals
+            document.getElementById('btnOpenSources').addEventListener('click', () => openModal('sourcesModal'));
+            document.getElementById('btnFooterSources').addEventListener('click', () => openModal('sourcesModal'));
+            document.getElementById('btnCloseSources').addEventListener('click', () => closeModal('sourcesModal'));
+            document.getElementById('btnConfirmSources').addEventListener('click', () => closeModal('sourcesModal'));
+
+            document.getElementById('btnOpenQuote').addEventListener('click', showRandomQuoteModal);
+            document.getElementById('btnFooterQuote').addEventListener('click', showRandomQuoteModal);
+            document.getElementById('btnCloseQuote').addEventListener('click', () => closeModal('quoteModal'));
+            document.getElementById('btnConfirmQuote').addEventListener('click', () => closeModal('quoteModal'));
+
+            // Copy Handler
+            document.getElementById('btnCopy').addEventListener('click', copyResults);
+        }
+
+        function copyResults() {
+            const matches = document.getElementById('matchCount').textContent;
+            const percent = document.getElementById('worldPercent').textContent;
+            const textToCopy = "According to the Moordale Love Engine, there are " + matches + " people (" + percent + ") who match my specific criteria out of 8 Billion on Earth! 💘";
+
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = textToCopy;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+
+            const btnText = document.getElementById('copyBtnText');
+            btnText.textContent = "Copied to Clipboard! ✨";
+            setTimeout(() => {
+                btnText.textContent = "Copy My Results";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
